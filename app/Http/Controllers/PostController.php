@@ -38,15 +38,21 @@ class PostController extends Controller
         return redirect("/posts/" . $post->id);
     }
     
-    public function edit(Post $post)
+    public function edit(Post $post, Tag $tag)
     {
-        return Inertia::render("Post/Edit", ["post" => $post]);
+        return Inertia::render("Post/Edit", ["post" => $post->load('tags'), "tags" => $tag->get()]);
     }
         
     public function update(PostRequest $request, Post $post)
     {
-        $input = $request->all();
-        $post->fill($input)->save();
+        $input_post = $request->except('tags');
+        $input_tags = $request->input('tags');
+        
+        $post->fill($input_post)->save();
+        if ($input_tags) {
+            $post->tags()->sync($input_tags);
+        }
+        
         return redirect("/posts/" . $post->id);
     }
 
