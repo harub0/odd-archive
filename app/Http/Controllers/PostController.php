@@ -10,9 +10,9 @@ use App\Models\Tag;
 
 class PostController extends Controller
 {
-    public function index(Post $post)
+    public function index()
     {
-        return Inertia::render("Post/Index",["posts" => $post->get()]);
+        return Inertia::render("Post/Index", ["posts" => Post::with("tags")->get()]);
     }
     
     public function create(Tag $tag)
@@ -22,7 +22,7 @@ class PostController extends Controller
     
     public function show(Post $post)
     {
-        return Inertia::render("Post/Show", ["post" => $post]);
+        return Inertia::render("Post/Show", ["post" => $post->load('tags')]);
     }
 
     public function store(PostRequest $request, Post $post)

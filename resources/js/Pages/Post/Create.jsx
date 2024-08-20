@@ -54,7 +54,7 @@ const Create = (props) => {
                         {tags.map((tag) => (
                             <label key={tag.id}>
                                 <input type="checkbox" value={tag.id} onChange={handleTagChange}/>
-                                {tag.tag}
+                                {tag.name}
                             </label>
                         ))}
                     </div>

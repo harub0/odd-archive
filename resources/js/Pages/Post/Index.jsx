@@ -20,6 +20,7 @@ const Index = (props) => {
             
             <div className="p-12">
                 <h1>Blog Name</h1>
+                <Link href="/posts/create">Create</Link>
 
                 { posts.map((post) => (
                     <div key={post.id}>
@@ -28,11 +29,14 @@ const Index = (props) => {
                         </h2>
                         <p>{ post.body }</p>
                         
+                        { post.tags.map((tag) => (
+                            <p>{ tag.name }</p>
+                        )) }
+                        
                         <button className="p-1 bg-purple-300 hover:bg-purple-400 rounded-md" onClick={() => handleDeletePost(post.id)}>delete</button>
                     </div>
                 )) }
                 
-                <Link href="/posts/create">Create</Link>
             </div>
             
         </Authenticated>
