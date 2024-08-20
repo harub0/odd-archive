@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Post;
 use App\Http\Requests\PostRequest;
+use App\Models\Tag;
 
 class PostController extends Controller
 {
@@ -14,9 +15,9 @@ class PostController extends Controller
         return Inertia::render("Post/Index",["posts" => $post->get()]);
     }
     
-    public function create()
+    public function create(Tag $tag)
     {
-         return Inertia::render("Post/Create");
+         return Inertia::render("Post/Create", ["tags" => $tag->get()]);
     }
     
     public function show(Post $post)
@@ -26,8 +27,14 @@ class PostController extends Controller
 
     public function store(PostRequest $request, Post $post)
     {
-        $input = $request->all();
-        $post->fill($input)->save();
+        $input_post = $request->except('tags');
+        $input_tags = $request->input('tags');
+        
+        $post->fill($input_post)->save();
+        if ($input_tags) {
+            $post->tags()->attach($input_tags);
+        }
+        
         return redirect("/posts/" . $post->id);
     }
     
