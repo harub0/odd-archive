@@ -3,15 +3,29 @@ import { Link, useForm } from '@inertiajs/react';
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 
 const Create = (props) => {
+    const {tags} = props;
     const {data, setData, post} = useForm({
         title: "",
-        body: ""
+        body: "",
+        tags: []
     })
     
     const handleSendPosts = (e) => {
         e.preventDefault();
         post("/posts");
     }
+
+    const handleTagChange = (e) => {
+        const tagId = parseInt(e.target.value);
+        const newTags = [...data.tags];
+        if (e.target.checked) {
+            // タグがチェックされた場合
+            setData("tags", [...newTags, tagId]);
+        } else {
+            // タグのチェックが外された場合
+            setData("tags", newTags.filter((id) => id !== tagId));
+        }
+    };
 
     return (
         <Authenticated user={props.auth.user} header={
@@ -35,6 +49,16 @@ const Create = (props) => {
                         <span className="text-red-600">{props.errors.body}</span>
                     </div>
                                     
+                    <div>
+                        <h2>Tags</h2>
+                        {tags.map((tag) => (
+                            <label key={tag.id}>
+                                <input type="checkbox" value={tag.id} onChange={handleTagChange}/>
+                                {tag.name}
+                            </label>
+                        ))}
+                    </div>
+
                     <button type="submit" className="p-1 bg-purple-300 hover:bg-purple-400 rounded-md">send</button>
                 </form>
                 

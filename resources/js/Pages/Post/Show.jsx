@@ -20,6 +20,13 @@ const Show = (props) => {
                     <p>{ post.body }</p>
                 </div>
                 
+                {post.tags.map((tag) => (
+                    <div>
+                        <p>{ tag.name }</p>
+                    </div>
+                ))}
+
+                
                 <div>
                     <Link href={`/posts/${post.id}/edit`}>編集</Link>
                 </div>
