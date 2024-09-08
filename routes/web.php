@@ -5,6 +5,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\LikeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,6 +46,7 @@ Route::group(["middleware" => ["auth"]], function() {
     Route::get("/posts/{post}", [PostController::class, "show"]);
     Route::get('/posts/{post}/edit', [PostController::class, "edit"]);
     Route::post("/posts", [PostController::class, "store"]);
+    Route::post("/posts/{post}/like", [LikeController::class, "push_like"]);
     Route::put('/posts/{post}', [PostController::class, "update"]);
     Route::delete("/posts/{post}", [PostController::class, "delete"]);
 });

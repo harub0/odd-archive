@@ -14,12 +14,17 @@ class Post extends Model
         "body"
     ];
 
+   public function user() {
+        return $this->belongsTo(User::class);
+    }
+    
     public function tags(){
         return $this->belongsToMany(Tag::class);
     }
     
-    public function likesUsers() {
-        return $this->belongsToMany(User::class, 'likes');
+    public function likedByUsers()
+    {
+        return $this->belongsToMany(User::class, 'likes')->withTimestamps();
     }
     
     public function bookmarksUsers() {

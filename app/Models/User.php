@@ -43,8 +43,14 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
     
-    public function likesPosts() {
-        return $this->belongsToMany(Post::class, 'likes');
+    
+    public function posts() {
+        return $this->hasMany(Post::class);
+    }
+    
+    public function likedPosts()
+    {
+        return $this->belongsToMany(Post::class, 'likes')->withTimestamps();
     }
     
     public function bookmarksPosts() {
