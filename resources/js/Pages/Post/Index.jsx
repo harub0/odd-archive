@@ -1,6 +1,7 @@
 import React from "react";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
-import { Link, router } from '@inertiajs/react'
+import { Link, router } from '@inertiajs/react';
+import LikeButton from "@/Components/LikeButton";
 
 const Index = (props) => {
     const { posts } = props;
@@ -11,6 +12,8 @@ const Index = (props) => {
         })
     }
 
+    console.log(props)
+    
     return (
         <Authenticated user={props.auth.user} header={
                 <h2 className="font-semibold text-xl text-gray-800 leading-tight">
@@ -32,6 +35,8 @@ const Index = (props) => {
                         { post.tags.map((tag) => (
                             <p>{ tag.name }</p>
                         )) }
+                        
+                        <LikeButton post={post}/>
                         
                         <button className="p-1 bg-purple-300 hover:bg-purple-400 rounded-md" onClick={() => handleDeletePost(post.id)}>delete</button>
                     </div>

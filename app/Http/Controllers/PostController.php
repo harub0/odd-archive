@@ -12,7 +12,7 @@ class PostController extends Controller
 {
     public function index()
     {
-        return Inertia::render("Post/Index", ["posts" => Post::with("tags")->get()]);
+        return Inertia::render("Post/Index", ["posts" => Post::with("tags")->with("likedByUsers")->get()]);
     }
     
     public function create(Tag $tag)
